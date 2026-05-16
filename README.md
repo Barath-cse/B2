@@ -95,32 +95,28 @@ B-SecureFile/
 - **Git** for version control (optional)
 - Any modern browser (Chrome, Firefox, Edge, Safari)
 
-### 1. Install Dependencies
+### 1. Install Dependencies & Setup
 
+First, clone the repository:
 ```bash
-# Clone repository
 git clone <your-repo-url>
 cd B-SecureFile
-
-# Install frontend dependencies
-cd frontend
-npm install
-
-# Install backend dependencies
-cd ../backend
-npm install
-
-# 2. Configure Environment (IMPORTANT)
-# Create a .env file in the backend directory
-touch .env
-# Add the following variables (see .env.example for details)
-# PORT=5000
-# CORS_ORIGIN=http://localhost:3000
-# CONTRACT_ADDRESS=0x...
-# PRIVATE_KEY=... (Required for Gasless transactions)
-# 
-# See 'backend/.env.example' for a template.
 ```
+
+Then, run the automated setup script to install dependencies and create necessary files (like `.env`):
+
+**For Windows:**
+```cmd
+setup.bat
+```
+
+**For macOS/Linux:**
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+*(The setup script creates a `.env` file in the `backend` directory. Please edit it to configure your `CONTRACT_ADDRESS` and `PRIVATE_KEY` if using blockchain features.)*
 
 ### 2. Start the Application
 
@@ -346,8 +342,8 @@ revokeAccess(uint fileId, address user)
 ## 📖 Quick Start
 
 ```bash
-# 1. Install dependencies
-cd frontend && npm install && cd ../backend && npm install
+# 1. Run automated setup (installs dependencies)
+# Windows: setup.bat | Mac/Linux: ./setup.sh
 
 # 2. Start backend
 cd backend && npm start
@@ -375,5 +371,3 @@ B-SecureFile Development Team
 ---
 
 **For comprehensive documentation, see [COMPLETE_GUIDE.md](docs/COMPLETE_GUIDE.md)**
-#   B 2  
- 
