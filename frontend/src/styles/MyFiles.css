@@ -167,6 +167,11 @@
   box-shadow: 0 5px 15px rgba(0, 242, 254, 0.2);
 }
 
+.download-btn:hover {
+  border-color: #f1c40f; /* Or any suitable color */
+  box-shadow: 0 5px 15px rgba(241, 196, 15, 0.2);
+}
+
 .delete-btn:hover {
   border-color: var(--danger);
   box-shadow: 0 5px 15px rgba(255, 75, 43, 0.2);

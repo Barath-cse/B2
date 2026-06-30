@@ -89,6 +89,38 @@ function MyFiles({ userAddress, onSelectFile }) {
     }
   };
 
+  const handleDownloadEncrypted = async (fileId, fileName) => {
+    try {
+      const res = await fetch(`${API_BASE}/file/${fileId}?userAddress=${userAddress}`);
+      
+      if (!res.ok) {
+        let errorMessage = 'Failed to download file';
+        try {
+          const data = await res.json();
+          errorMessage = data.error || errorMessage;
+        } catch(e) {}
+        throw new Error(errorMessage);
+      }
+      
+      const blob = await res.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = `${fileId}.encrypted`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+      
+      setSuccessMessage(`✓ Download started for encrypted file`);
+      setTimeout(() => setSuccessMessage(''), 3000);
+    } catch (err) {
+      console.error('Download error:', err);
+      setError(`Failed to download file: ${err.message}`);
+      setTimeout(() => setError(null), 5000);
+    }
+  };
+
   const calculateTimeLeft = (expiryDate) => {
     const difference = new Date(expiryDate) - new Date();
     if (difference <= 0) return 'Expired';
@@ -157,6 +189,13 @@ function MyFiles({ userAddress, onSelectFile }) {
                 </div>
 
                 <div className="file-actions">
+                  <button 
+                    className="action-btn download-btn" 
+                    onClick={() => handleDownloadEncrypted(file.fileId, file.fileName)}
+                    title="Download Encrypted File"
+                  >
+                    ⬇️
+                  </button>
                   <button 
                     className="action-btn manage-btn" 
                     onClick={() => onSelectFile(file.fileId)}
